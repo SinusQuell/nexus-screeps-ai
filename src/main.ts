@@ -1,9 +1,11 @@
 import { ErrorMapper } from "utils/ErrorMapper";
+import { Colony } from "types";
 
 declare global {
   // Memory extension
   interface Memory {
-    allies: string[];
+    allies: string[],
+    colonies: Colony[]
   }
 }
 
