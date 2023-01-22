@@ -1,14 +1,14 @@
 import { util_mincut } from "./MinimumCut";
 
 export class RampartsPlacer {
-    public safeRects: SafeRect[]
+    public safeRects: Rectangle[]
     public roomName: string
 
     public wallPositions?: { x: number, y: number }[]
 
     private bounds = { x1: 0, y1: 0, x2: 49, y2: 49 }
 
-    constructor(roomName: string, safeRects: SafeRect[]) {
+    constructor(roomName: string, safeRects: Rectangle[]) {
         this.safeRects = safeRects
         this.roomName = roomName
     }
@@ -35,7 +35,7 @@ export class RampartsPlacer {
     }
 }
 
-export class SafeRect {
+export class Rectangle {
     public x1: number
     public y1: number
     public x2: number
@@ -62,4 +62,23 @@ export class SafeRect {
         this.height = Math.max(this.y1, this.y2) - Math.min(this.y1, this.y2)
     }
 
+    public getPositions(): {x: number, y: number}[] {
+        let positions = []
+        for (let x = this.minX; x < this.maxX; x++) {
+            for (let y = this.minY; y < this.maxY; y++) {
+                positions.push({x: x, y: y})
+            }
+        }
+        return positions;
+    }
+
+    public getRoomPositions(roomName: string): RoomPosition[] {
+        let positions: RoomPosition[] = []
+        for (let x = this.minX; x < this.maxX; x++) {
+            for (let y = this.minY; y < this.maxY; y++) {
+                positions.push(new RoomPosition(x, y, roomName))
+            }
+        }
+        return positions;
+    }
 }
