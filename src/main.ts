@@ -1,5 +1,4 @@
 import { ErrorMapper } from "utils/ErrorMapper";
-import { Rectangle, RampartsPlacer } from "building/RampartsPlacer";
 import { RoomArchitect } from "building/RoomArchitect";
 import { Colony } from "types";
 
@@ -17,16 +16,13 @@ declare global {
 export const loop = ErrorMapper.wrapLoop(() => {
 	let cpu = Game.cpu.getUsed()
 
-	const rect1 = RoomArchitect.findSpotExclude(Game.rooms['sim'], 9, 9)
-	const rect2 = RoomArchitect.findSpotExclude(Game.rooms['sim'], 7, 7, [rect1!])
-	const rect3 = RoomArchitect.findSpotExclude(Game.rooms['sim'], 7, 7, [rect1!, rect2!])
-	const rect4 = RoomArchitect.findSpotExclude(Game.rooms['sim'], 7, 7, [rect1!, rect2!, rect3!])
-	const rect5 = RoomArchitect.findSpotExclude(Game.rooms['sim'], 5, 5, [rect1!, rect2!, rect3!, rect4!])
+	// Loop through owned rooms
+	for (let roomName in Game.rooms) {
+		let controller = Game.rooms[roomName].controller;
+		if (!controller || !controller.my) return; // no controller or not owned
 
-
-	let ramps = new RampartsPlacer('sim', RoomArchitect.getDefaultRectangles('sim').concat([rect1!, rect2!, rect3!, rect4!, rect5!]))
-	ramps.calculate()
-
+		RoomArchitect.findBunkerSpot(roomName);
+	}
 
 	// Automatically delete memory of missing creeps
 	for (const name in Memory.creeps) {

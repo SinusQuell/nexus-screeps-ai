@@ -47,6 +47,8 @@ export class Rectangle {
     public maxY: number
     public width: number
     public height: number
+    public centerX: number
+    public centerY: number
 
     constructor(x1: number, y1: number, x2: number, y2: number) {
         this.x1 = x1
@@ -60,6 +62,8 @@ export class Rectangle {
         this.maxY = Math.max(this.y1, this.y2)
         this.width = Math.max(this.x1, this.x2) - Math.min(this.x1, this.x2)
         this.height = Math.max(this.y1, this.y2) - Math.min(this.y1, this.y2)
+        this.centerX = this.minX + this.width / 2;
+        this.centerY = this.minY + this.height / 2;
     }
 
     public getPositions(): {x: number, y: number}[] {
@@ -80,5 +84,19 @@ export class Rectangle {
             }
         }
         return positions;
+    }
+
+    public getCenterRoomPosition(roomName: string): RoomPosition {
+        return new RoomPosition(this.centerX, this.centerY, roomName);
+    }
+
+    // creates an array of Rectangles from an array of RoomPositions
+    public static createRectangles(positions: RoomPosition[], rectSize: number): Rectangle[] {
+        let Rectangles: Rectangle[] = [];
+        positions.forEach(s => {
+            Rectangles.push(new Rectangle(s.x - rectSize, s.y - rectSize, s.x + rectSize, s.y + rectSize))
+        })
+
+        return Rectangles;
     }
 }

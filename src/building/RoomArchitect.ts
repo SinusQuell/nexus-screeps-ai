@@ -1,4 +1,5 @@
-import { Rectangle } from "building/RampartsPlacer";
+import { Rectangle, RampartsPlacer } from "building/RampartsPlacer";
+import { SourceHelper } from "utils/SourceHelper";
 
 export class RoomArchitect {
 
@@ -13,20 +14,21 @@ export class RoomArchitect {
         safePos.push(Game.rooms[roomName].controller!.pos);
         Game.rooms[roomName].find(FIND_MINERALS).forEach(x => safePos.push(x.pos))
 
-        return this.createRectangles(safePos, rectSize)
+        return Rectangle.createRectangles(safePos, rectSize)
     }
 
-    // creates an array of Rectangles from an array of RoomPositions
-    private static createRectangles(positions: RoomPosition[], rectSize: number): Rectangle[] {
-        let Rectangles: Rectangle[] = [];
-        positions.forEach(s => {
-            Rectangles.push(new Rectangle(s.x - rectSize, s.y - rectSize, s.x + rectSize, s.y + rectSize))
-        })
+    public static findSpaceNearPoint(
+        room: Room,
+        rectangleWidth: number,
+        rectangleHeight: number,
+        notPlaceable: RoomPosition[] = [],
+        label: string = '',
+        closeTo: RoomPosition | undefined
+    ): RoomPosition | undefined
+    {
+        // default is as close to center as possible
+        if (!closeTo) closeTo = new RoomPosition(25, 25, room.name)
 
-        return Rectangles;
-    }
-
-    public static findSpotNearCenter(room: Room, rectangleWidth: number, rectangleHeight: number, notPlaceable: RoomPosition[] = []): RoomPosition | undefined {
         // Create a 2D array to represent the room
         const roomMap: number[][] = [];
         for (let x = 0; x < 50; x++) {
@@ -38,10 +40,6 @@ export class RoomArchitect {
                     || _.find(notPlaceable, np => np.x === x && np.y === y)) ? 1 : 0;
             }
         }
-
-        // Set the center of the room
-        const centerX = 25;
-        const centerY = 25;
 
         // Set the initial minimum distance to a high value
         let minDistance = Number.MAX_SAFE_INTEGER;
@@ -67,7 +65,7 @@ export class RoomArchitect {
                 if (available) {
                     const spotX = x + rectangleWidth / 2;
                     const spotY = y + rectangleHeight / 2;
-                    const distance = Math.sqrt(Math.pow(centerX - spotX, 2) + Math.pow(centerY - spotY, 2));
+                    const distance = Math.sqrt(Math.pow(closeTo.x - spotX, 2) + Math.pow(closeTo.y - spotY, 2));
                     if (distance < minDistance) {
                         minDistance = distance;
                         optimalSpot = new RoomPosition(x, y, room.name);
@@ -76,16 +74,39 @@ export class RoomArchitect {
             }
         }
 
-        room.visual.rect(optimalSpot!.x, optimalSpot!.y, rectangleWidth-1, rectangleHeight-1, {fill: '#00FF00'})
+        if (!optimalSpot) return undefined
+
+        room.visual.rect(optimalSpot!.x+1, optimalSpot!.y+1, rectangleWidth-3, rectangleHeight-3, {fill: '#FF0000'})
+        if (label && label != '') room.visual.text(label, optimalSpot!.x + rectangleWidth / 2, optimalSpot!.y + rectangleHeight / 2)
         return optimalSpot
     }
 
-    public static findSpotExclude(room: Room, rectangleWidth: number, rectangleHeight: number, rectangles: Rectangle[] = []): Rectangle | undefined {
+    public static findSpaceExclude(
+        room: Room,
+        rectangleWidth: number,
+        rectangleHeight: number,
+        rectangles: Rectangle[] = [],
+        label: string = '',
+        closeTo: RoomPosition | undefined = undefined
+    ): Rectangle | undefined
+    {
         let excludePositions: RoomPosition[] = []
         rectangles.forEach(r => {
             excludePositions = excludePositions.concat(r.getRoomPositions(room.name))
         })
-        let spot = this.findSpotNearCenter(room, rectangleWidth, rectangleHeight, excludePositions);
-        return new Rectangle(spot!.x, spot!.y, spot!.x + rectangleWidth, spot!.y + rectangleHeight)
+        let spot = this.findSpaceNearPoint(room, rectangleWidth, rectangleHeight, excludePositions, label, closeTo);
+        if (!spot) return undefined
+        return new Rectangle(spot!.x+1, spot!.y+1, spot!.x-2 + rectangleWidth, spot!.y-2 + rectangleHeight)
+    }
+
+    public static findBunkerSpot(roomName: string) {
+        let furthestSource = SourceHelper.findFurthestSource(Game.rooms['sim']);
+
+        const bunker = RoomArchitect.findSpaceExclude(Game.rooms['sim'], 13, 13, [], 'bunker', furthestSource?.pos)
+
+        if (bunker) {
+            let ramps = new RampartsPlacer('sim', RoomArchitect.getDefaultRectangles('sim').concat([bunker!]))
+            ramps.calculate()
+        }
     }
 }
