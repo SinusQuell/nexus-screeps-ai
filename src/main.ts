@@ -1,4 +1,5 @@
 import { ErrorMapper } from "utils/ErrorMapper";
+import { MemoryUtils } from "utils/MemoryUtils";
 import { RoomArchitect } from "building/RoomArchitect";
 import { Colony } from "types";
 
@@ -18,18 +19,13 @@ export const loop = ErrorMapper.wrapLoop(() => {
 
 	// Loop through owned rooms
 	for (let roomName in Game.rooms) {
-		let controller = Game.rooms[roomName].controller;
-		if (!controller || !controller.my) return; // no controller or not owned
+		let controller = Game.rooms[roomName].controller
+		if (!controller || !controller.my) return // no controller or not owned
 
-		RoomArchitect.findBunkerSpot(roomName);
+		RoomArchitect.findBunkerSpot(roomName)
 	}
 
-	// Automatically delete memory of missing creeps
-	for (const name in Memory.creeps) {
-		if (!(name in Game.creeps)) {
-			delete Memory.creeps[name]
-		}
-	}
+	MemoryUtils.cleanMemory()
 
 	cpu = Game.cpu.getUsed() - cpu
 	console.log('CPU this tick: ', cpu, 'ms. ', `Current tick is: ${Game.time}`)
