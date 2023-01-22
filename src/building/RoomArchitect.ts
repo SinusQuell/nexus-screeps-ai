@@ -5,7 +5,7 @@ export class RoomArchitect {
 
     // returns an array of Rectangles around the following room structures:
     // Sources, Controller, Mineral
-    public static getDefaultRectangles(roomName: string, rectSize: number = 2): Rectangle[] {
+    private static getDefaultRectangles(roomName: string, rectSize: number = 2): Rectangle[] {
         if (!Game.rooms[roomName]) return []; //check for vision
 
         // gather structure positions
@@ -17,7 +17,7 @@ export class RoomArchitect {
         return Rectangle.createRectangles(safePos, rectSize)
     }
 
-    public static findSpaceNearPoint(
+    private static findSpaceNearPoint(
         room: Room,
         rectangleWidth: number,
         rectangleHeight: number,
@@ -76,12 +76,13 @@ export class RoomArchitect {
 
         if (!optimalSpot) return undefined
 
-        room.visual.rect(optimalSpot!.x+1, optimalSpot!.y+1, rectangleWidth-3, rectangleHeight-3, {fill: '#FF0000'})
-        if (label && label != '') room.visual.text(label, optimalSpot!.x + rectangleWidth / 2, optimalSpot!.y + rectangleHeight / 2)
+        room.visual.rect(optimalSpot!.x+1, optimalSpot!.y+1, rectangleWidth-3, rectangleHeight-3, {fill: '#F00'})
+        room.visual.circle(optimalSpot, {radius: 0.3, fill: '#0F0'})
+        if (label && label != '') room.visual.text(label, optimalSpot.x + rectangleWidth / 2, optimalSpot.y + rectangleHeight / 2)
         return optimalSpot
     }
 
-    public static findSpaceExclude(
+    private static findSpaceExclude(
         room: Room,
         rectangleWidth: number,
         rectangleHeight: number,
@@ -100,12 +101,12 @@ export class RoomArchitect {
     }
 
     public static findBunkerSpot(roomName: string) {
-        let furthestSource = SourceHelper.findFurthestSource(Game.rooms['sim']);
+        let furthestSource = SourceHelper.findFurthestSource(Game.rooms[roomName]);
 
-        const bunker = RoomArchitect.findSpaceExclude(Game.rooms['sim'], 13, 13, [], 'bunker', furthestSource?.pos)
+        const bunker = RoomArchitect.findSpaceExclude(Game.rooms[roomName], 13, 13, [], 'bunker', furthestSource?.pos)
 
         if (bunker) {
-            let ramps = new RampartsPlacer('sim', RoomArchitect.getDefaultRectangles('sim').concat([bunker!]))
+            let ramps = new RampartsPlacer(roomName, RoomArchitect.getDefaultRectangles(roomName).concat([bunker]))
             ramps.calculate()
         }
     }
