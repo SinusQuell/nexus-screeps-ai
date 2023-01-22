@@ -14,8 +14,10 @@ export class RampartsPlacer {
     }
 
     public calculate(visualize: boolean = true) {
-        this.wallPositions = util_mincut.GetCutTiles(this.roomName, this.safeRects, this.bounds) // Positions is an array where to build walls/ramparts
-        if (visualize) this.visualize()
+        // wallPositions is an array where to build walls/ramparts
+        this.wallPositions = util_mincut.GetCutTiles(this.roomName, this.safeRects, this.bounds)
+        if (visualize)
+            this.visualize()
     }
 
     private visualize() {
@@ -40,7 +42,9 @@ export class SafeRect {
     public y2: number
 
     public minX: number
+    public maxX: number
     public minY: number
+    public maxY: number
     public width: number
     public height: number
 
@@ -51,7 +55,9 @@ export class SafeRect {
         this.y2 = y2
 
         this.minX = Math.min(this.x1, this.x2)
+        this.maxX = Math.max(this.x1, this.x2)
         this.minY = Math.min(this.y1, this.y2)
+        this.maxY = Math.max(this.y1, this.y2)
         this.width = Math.max(this.x1, this.x2) - Math.min(this.x1, this.x2)
         this.height = Math.max(this.y1, this.y2) - Math.min(this.y1, this.y2)
     }

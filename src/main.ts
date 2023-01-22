@@ -1,5 +1,6 @@
 import { ErrorMapper } from "utils/ErrorMapper";
 import { SafeRect, RampartsPlacer } from "building/RampartsPlacer";
+import { RoomArchitect } from "building/RoomArchitect";
 import { Colony } from "types";
 
 
@@ -18,11 +19,7 @@ export const loop = ErrorMapper.wrapLoop(() => {
 
 	let cpu = Game.cpu.getUsed()
 
-	let rect_array: SafeRect[] = []
-	rect_array.push(new SafeRect(20, 6, 28, 27))
-	rect_array.push(new SafeRect(29, 13, 34, 16))
-
-	let ramps = new RampartsPlacer('sim', rect_array)
+	let ramps = new RampartsPlacer('sim', RoomArchitect.getDefaultSafeRects('sim'))
 	ramps.calculate()
 
 	cpu = Game.cpu.getUsed() - cpu
