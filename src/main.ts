@@ -1,5 +1,6 @@
 import { ErrorMapper } from "utils/ErrorMapper";
 import { MemoryUtils } from "utils/MemoryUtils";
+import { BuildQueue } from "building/BuildQueue";
 import { ColonyMemory } from "Colony";
 
 
@@ -21,6 +22,7 @@ export const loop = ErrorMapper.wrapLoop(() => {
 		let controller = Game.rooms[roomName].controller
 		if (!controller || !controller.my) return // no controller or not owned
 
+		BuildQueue.buildFromQueue(roomName);
 	}
 
 	MemoryUtils.cleanMemory()
