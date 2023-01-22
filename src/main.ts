@@ -1,14 +1,13 @@
 import { ErrorMapper } from "utils/ErrorMapper";
 import { MemoryUtils } from "utils/MemoryUtils";
-import { RoomArchitect } from "building/RoomArchitect";
-import { Colony } from "types";
+import { ColonyMemory } from "Colony";
 
 
 declare global {
 	// Memory extension
 	interface Memory {
 		allies: string[],
-		colonies: Colony[]
+		colonies: ColonyMemory[]
 	}
 }
 
@@ -22,7 +21,6 @@ export const loop = ErrorMapper.wrapLoop(() => {
 		let controller = Game.rooms[roomName].controller
 		if (!controller || !controller.my) return // no controller or not owned
 
-		RoomArchitect.findBunkerSpot(roomName)
 	}
 
 	MemoryUtils.cleanMemory()
