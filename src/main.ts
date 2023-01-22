@@ -1,14 +1,22 @@
 import { ErrorMapper } from "utils/ErrorMapper";
 import { MemoryUtils } from "utils/MemoryUtils";
+import { Nexus } from "utils/Nexus";
 import { BuildQueue } from "building/BuildQueue";
 import { ColonyMemory } from "Colony";
-
+global.Nexus = Nexus;
 
 declare global {
 	// Memory extension
 	interface Memory {
 		allies: string[],
-		colonies: ColonyMemory[]
+		colonies: { [key: string]: ColonyMemory }
+	}
+
+	// Globals
+	namespace NodeJS {
+		interface Global {
+		  Nexus: Nexus;
+		}
 	}
 }
 

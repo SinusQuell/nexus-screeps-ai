@@ -20,4 +20,19 @@ export class MemoryUtils {
             }
         }
     }
+
+    // Initialize Colony Memory for new Colonies
+    public static initColonyMemory(colonyOrigin: RoomPosition) {
+        this.initMemory()
+
+        Memory.colonies[colonyOrigin.roomName] = {
+            buildQueue: [],
+            bunkerOrigin: colonyOrigin
+        }
+        console.log("initialized")
+    }
+
+    public static initMemory() {
+        if (!Memory.colonies) Memory.colonies = {};
+    }
 }

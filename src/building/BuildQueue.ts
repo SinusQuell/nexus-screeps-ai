@@ -1,12 +1,15 @@
 export class BuildQueue {
 
     // add a new structure to the build queue
-    public static addToBuildQue(colonyRoomName: string, buildPosition: RoomPosition, structureType: BuildableStructureConstant) {
-        Memory.colonies[colonyRoomName].buildQueue.push(buildPosition, structureType)
+    public static addToBuildQueue(colonyRoomName: string, buildPosition: RoomPosition, structureType: BuildableStructureConstant) {
+        Memory.colonies[colonyRoomName].buildQueue[Memory.colonies[colonyRoomName].buildQueue.length] = {buildPosition, structureType}
     }
 
     public static buildFromQueue(colonyRoomName: string) {
-        let buildQueue: BuildQueueMemory[] = Memory.colonies[colonyRoomName].buildQueue
+        if (!Memory.colonies || !Memory.colonies[colonyRoomName]) return;
+        let buildQueue = Memory.colonies[colonyRoomName].buildQueue
+        console.log("building...");
+
         if (!buildQueue || buildQueue.length <= 0) return // BuildQueue is empty or doesn't exist
         if (Object.keys(Game.constructionSites).length >= MAX_CONSTRUCTION_SITES - 20) return // global limit for construction sites reached
 
@@ -28,22 +31,22 @@ export class BuildQueue {
             // check if it's the same structure type. if so, this is a duplicate.
             if (cSite[0].structureType == toBuild.structureType) {
                 Memory.colonies[colonyRoomName].buildQueue = _.drop(buildQueue)
-                return;
+                return
             }
             //move entry to the end of the queue
-            this.addToBuildQue(colonyRoomName, toBuild.buildPosition, toBuild.structureType)
+            this.addToBuildQueue(colonyRoomName, toBuild.buildPosition, toBuild.structureType)
             Memory.colonies[colonyRoomName].buildQueue = _.drop(buildQueue)
-            return;
+            return
         }
 
-        let result = Game.rooms[toBuild['buildRoom']].createConstructionSite(toBuild.buildPosition.x, toBuild.buildPosition.y, toBuild.structureType)
+        let result = Game.rooms[toBuild.buildPosition.roomName].createConstructionSite(toBuild.buildPosition.x, toBuild.buildPosition.y, toBuild.structureType)
 
         if (result == OK) {
             //built ok, remove entry
             Memory.colonies[colonyRoomName].buildQueue = _.drop(buildQueue)
         } else {
             //build failed, move entry to the end of the queue
-            this.addToBuildQue(colonyRoomName, toBuild.buildPosition, toBuild.structureType)
+            this.addToBuildQueue(colonyRoomName, toBuild.buildPosition, toBuild.structureType)
             Memory.colonies[colonyRoomName].buildQueue = _.drop(buildQueue)
         }
     }
