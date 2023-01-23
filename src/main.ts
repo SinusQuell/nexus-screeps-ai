@@ -2,7 +2,7 @@ import { ErrorMapper } from "utils/ErrorMapper";
 import { MemoryUtils } from "utils/MemoryUtils";
 import { Nexus } from "utils/Nexus";
 import { BuildQueue } from "building/BuildQueue";
-import { ColonyMemory } from "Colony";
+import { ColonyMemory } from "building/Colony";
 import { Traveler } from "creeps/Traveler";
 
 global.Nexus = Nexus;
@@ -29,6 +29,7 @@ export const loop = ErrorMapper.wrapLoop(() => {
 	// Loop through owned rooms
 	for (let roomName in Game.rooms) {
 		let controller = Game.rooms[roomName].controller
+		let room = Game.rooms[roomName]
 		if (!controller || !controller.my) return // no controller or not owned
 
 		if (Game.time % 3 == 0)

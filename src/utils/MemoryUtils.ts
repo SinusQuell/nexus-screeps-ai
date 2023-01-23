@@ -27,11 +27,13 @@ export class MemoryUtils {
 
         Memory.colonies[colonyOrigin.roomName] = {
             buildQueue: [],
-            bunkerOrigin: colonyOrigin
+            bunkerOrigin: colonyOrigin,
+            RCL: 0
         }
         console.log("initialized")
     }
 
+    // Initialize Global Memory Objects
     public static initMemory() {
         if (!Memory.colonies) Memory.colonies = {};
     }
