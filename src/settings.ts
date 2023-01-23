@@ -1,0 +1,1 @@
+declare const NX_CONSTRUCTIONS_PER_BASE = 5

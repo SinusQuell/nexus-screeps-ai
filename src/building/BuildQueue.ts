@@ -19,7 +19,7 @@ export class BuildQueue {
 
         // only ever place a certain amount of construction sites per colony
         let cSiteCount = buildRoom.find(FIND_MY_CONSTRUCTION_SITES).length
-        if (cSiteCount >= 5) return //TODO: make this magic number a global setting
+        if (cSiteCount >= NX_CONSTRUCTIONS_PER_BASE) return
 
         // check for creep at the position, as they block construction via code
         let creeps = buildRoom.lookForAt(LOOK_CREEPS, toBuild.buildPosition.x, toBuild.buildPosition.y)
