@@ -3,8 +3,9 @@ import { MemoryUtils } from "utils/MemoryUtils";
 import { Nexus } from "utils/Nexus";
 import { BuildQueue } from "building/BuildQueue";
 import { ColonyMemory } from "Colony";
-global.Nexus = Nexus;
+import { Traveler } from "creeps/Traveler";
 
+global.Nexus = Nexus;
 declare global {
 	// Memory extension
 	interface Memory {
@@ -30,7 +31,8 @@ export const loop = ErrorMapper.wrapLoop(() => {
 		let controller = Game.rooms[roomName].controller
 		if (!controller || !controller.my) return // no controller or not owned
 
-		BuildQueue.buildFromQueue(roomName);
+		if (Game.time % 3 == 0)
+			BuildQueue.buildFromQueue(roomName);
 	}
 
 	MemoryUtils.cleanMemory()
