@@ -53,8 +53,7 @@ export class Traveler {
 
         // initialize data object
         if (!creep.memory._trav) {
-            delete creep.memory._travel;
-            creep.memory._trav = {};
+            creep.memory._trav = {} as TravelData;
         }
         let travelData = creep.memory._trav as TravelData;
 
@@ -84,7 +83,7 @@ export class Traveler {
         // delete path cache if destination is different
         if (!this.samePos(state.destination, destination)) {
             if (options.movingTarget && state.destination.isNearTo(destination)) {
-                travelData.path += state.destination.getDirectionTo(destination);
+                travelData.path! += state.destination.getDirectionTo(destination);
                 state.destination = destination;
             } else {
                 delete travelData.path;
@@ -150,7 +149,7 @@ export class Traveler {
             options.returnData.state = state;
             options.returnData.path = travelData.path;
         }
-        return creep.move(nextDirection);
+        return creep.move(nextDirection as DirectionConstant);
     }
 
     /**
@@ -493,7 +492,7 @@ export class Traveler {
     public static addStructuresToMatrix(room: Room, matrix: CostMatrix, roadCost: number): CostMatrix {
 
         let impassibleStructures: Structure[] = [];
-        for (let structure of room.find<Structure>(FIND_STRUCTURES)) {
+        for (let structure of room.find(FIND_STRUCTURES)) {
             if (structure instanceof StructureRampart) {
                 if (!structure.my && !structure.isPublic) {
                     impassibleStructures.push(structure);
@@ -507,7 +506,7 @@ export class Traveler {
             }
         }
 
-        for (let site of room.find<ConstructionSite>(FIND_MY_CONSTRUCTION_SITES)) {
+        for (let site of room.find(FIND_MY_CONSTRUCTION_SITES)) {
             if (site.structureType === STRUCTURE_CONTAINER || site.structureType === STRUCTURE_ROAD
                 || site.structureType === STRUCTURE_RAMPART) { continue; }
             matrix.set(site.pos.x, site.pos.y, 0xff);
@@ -528,7 +527,7 @@ export class Traveler {
      */
 
     public static addCreepsToMatrix(room: Room, matrix: CostMatrix): CostMatrix {
-        room.find<Creep>(FIND_CREEPS).forEach((creep: Creep) => matrix.set(creep.pos.x, creep.pos.y, 0xff) );
+        room.find(FIND_CREEPS).forEach((creep: Creep) => matrix.set(creep.pos.x, creep.pos.y, 0xff) );
         return matrix;
     }
 
@@ -576,26 +575,26 @@ export class Traveler {
      * @param cleanup
      */
 
-    public static patchMemory(cleanup = false) {
-        if (!Memory.empire) { return; }
-        if (!Memory.empire.hostileRooms) { return; }
-        let count = 0;
-        for (let roomName in Memory.empire.hostileRooms) {
-            if (Memory.empire.hostileRooms[roomName]) {
-                if (!Memory.rooms[roomName]) { Memory.rooms[roomName] = {} as any; }
-                Memory.rooms[roomName].avoid = 1;
-                count++;
-            }
-            if (cleanup) {
-                delete Memory.empire.hostileRooms[roomName];
-            }
-        }
-        if (cleanup) {
-            delete Memory.empire.hostileRooms;
-        }
+    // public static patchMemory(cleanup = false) {
+    //     if (!Memory.empire) { return; }
+    //     if (!Memory.empire.hostileRooms) { return; }
+    //     let count = 0;
+    //     for (let roomName in Memory.empire.hostileRooms) {
+    //         if (Memory.empire.hostileRooms[roomName]) {
+    //             if (!Memory.rooms[roomName]) { Memory.rooms[roomName] = {} as any; }
+    //             Memory.rooms[roomName].avoid = 1;
+    //             count++;
+    //         }
+    //         if (cleanup) {
+    //             delete Memory.empire.hostileRooms[roomName];
+    //         }
+    //     }
+    //     if (cleanup) {
+    //         delete Memory.empire.hostileRooms;
+    //     }
 
-        console.log(`TRAVELER: room avoidance data patched for ${count} rooms`);
-    }
+    //     console.log(`TRAVELER: room avoidance data patched for ${count} rooms`);
+    // }
 
     private static deserializeState(travelData: TravelData, destination: RoomPosition): TravelState {
         let state = {} as TravelState;

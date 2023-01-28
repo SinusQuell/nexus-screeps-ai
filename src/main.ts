@@ -14,6 +14,13 @@ declare global {
 		colonies: { [key: string]: ColonyMemory }
 	}
 
+	interface CreepMemory {
+		_trav: TravelData
+	}
+
+	interface RoomMemory {
+		avoid?: number
+	}
 	// Globals
 	namespace NodeJS {
 		interface Global {
