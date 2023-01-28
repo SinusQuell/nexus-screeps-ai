@@ -8,7 +8,6 @@ export class BuildQueue {
     public static buildFromQueue(colonyRoomName: string) {
         if (!Memory.colonies || !Memory.colonies[colonyRoomName]) return;
         let buildQueue = Memory.colonies[colonyRoomName].buildQueue
-        console.log("building...");
 
         if (!buildQueue || buildQueue.length <= 0) return // BuildQueue is empty or doesn't exist
         if (Object.keys(Game.constructionSites).length >= MAX_CONSTRUCTION_SITES - 20) return // global limit for construction sites reached
