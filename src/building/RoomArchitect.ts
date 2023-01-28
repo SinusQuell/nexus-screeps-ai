@@ -115,12 +115,12 @@ export class RoomArchitect {
         }
     }
 
-    public static buildColonyStaged(room: Room, contoller: StructureController) {
+    public static buildColonyStaged(room: Room, controller: StructureController) {
         if (!Colony.checkRclLevelUp(room.name)) return
 
         let originX = Memory.colonies[room.name].bunkerOrigin.x
         let originY = Memory.colonies[room.name].bunkerOrigin.y
-        let newRCL = contoller.level
+        let newRCL = controller.level
 
         switch (newRCL) {
             case 2: // ### RCL 2 ###
@@ -135,7 +135,7 @@ export class RoomArchitect {
                 BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 6, originY + 2, room.name), STRUCTURE_EXTENSION)
 
                 // container near controller
-                let containerPosController = BuildHelper.getPositionCloseToByPath(room.name, contoller)
+                let containerPosController = BuildHelper.getPositionCloseToByPath(room.name, controller)
                 BuildQueue.addToBuildQueue(room.name, new RoomPosition(containerPosController.x, containerPosController.y, room.name), STRUCTURE_CONTAINER)
 
                 // containers near sources
@@ -165,7 +165,7 @@ export class RoomArchitect {
                 BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 2, originY + 4, room.name), STRUCTURE_EXTENSION)
                 BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 8, originY + 3, room.name), STRUCTURE_EXTENSION)
                 BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 8, originY + 4, room.name), STRUCTURE_EXTENSION)
-                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 9, originY + 4, room.name), STRUCTURE_EXTENSION)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 7, originY + 4, room.name), STRUCTURE_EXTENSION)
 
                 // roads to sources and controller
                 sources = Game.rooms[room.name].find(FIND_SOURCES);
@@ -175,22 +175,212 @@ export class RoomArchitect {
                 BuildHelper.buildRoad(room.name, room.controller!.pos)
 
                 BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 10, originY + 4, room.name), STRUCTURE_ROAD)
-                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 9, originY + 5, room.name), STRUCTURE_ROAD)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 9,  originY + 5, room.name), STRUCTURE_ROAD)
                 BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 11, originY + 5, room.name), STRUCTURE_ROAD)
-                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 2, originY + 3, room.name), STRUCTURE_ROAD)
-                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 1, originY + 4, room.name), STRUCTURE_ROAD)
-                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 1, originY + 5, room.name), STRUCTURE_ROAD)
-                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 1, originY + 6, room.name), STRUCTURE_ROAD)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 2,  originY + 3, room.name), STRUCTURE_ROAD)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 1,  originY + 4, room.name), STRUCTURE_ROAD)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 1,  originY + 5, room.name), STRUCTURE_ROAD)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 1,  originY + 6, room.name), STRUCTURE_ROAD)
 
                 // TODO: add areas to memory, where creeps can/cannot go to idle. Old Codebase used flags for this.
                 break;
             case 4:
+                // storage
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 3, originY + 3, room.name), STRUCTURE_STORAGE)
 
-            // storage
-            // 10x extensions
-            // missing bunker roads
+                // 10x extensions
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 7 , originY + 1, room.name), STRUCTURE_EXTENSION)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 8 , originY + 1, room.name), STRUCTURE_EXTENSION)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 9 , originY + 1, room.name), STRUCTURE_EXTENSION)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 9 , originY + 2, room.name), STRUCTURE_EXTENSION)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 10, originY + 2, room.name), STRUCTURE_EXTENSION)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 10, originY + 3, room.name), STRUCTURE_EXTENSION)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 11, originY + 3, room.name), STRUCTURE_EXTENSION)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 11, originY + 4, room.name), STRUCTURE_EXTENSION)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 10, originY + 5, room.name), STRUCTURE_EXTENSION)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 8 , originY + 5, room.name), STRUCTURE_EXTENSION)
+
+                // more bunker roads
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 6, originY + 3 , room.name), STRUCTURE_ROAD)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 6, originY + 4 , room.name), STRUCTURE_ROAD)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 5, originY + 5 , room.name), STRUCTURE_ROAD)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 4, originY + 4 , room.name), STRUCTURE_ROAD)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 4, originY + 6 , room.name), STRUCTURE_ROAD)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 3, originY + 6 , room.name), STRUCTURE_ROAD)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 2, originY + 7 , room.name), STRUCTURE_ROAD)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 2, originY + 8 , room.name), STRUCTURE_ROAD)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 3, originY + 9 , room.name), STRUCTURE_ROAD)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 4, originY + 10, room.name), STRUCTURE_ROAD)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 5, originY + 9 , room.name), STRUCTURE_ROAD)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 5, originY + 11, room.name), STRUCTURE_ROAD)
 
                 break;
+            case 5:
+                // second tower
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 9, originY + 4, room.name), STRUCTURE_TOWER)
+
+                // 10x extensions
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 2 , originY + 5, room.name), STRUCTURE_EXTENSION)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 2 , originY + 6, room.name), STRUCTURE_EXTENSION)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 9 , originY + 6, room.name), STRUCTURE_EXTENSION)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 9 , originY + 7, room.name), STRUCTURE_EXTENSION)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 9 , originY + 8, room.name), STRUCTURE_EXTENSION)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 12, originY + 4, room.name), STRUCTURE_EXTENSION)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 12, originY + 5, room.name), STRUCTURE_EXTENSION)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 12, originY + 6, room.name), STRUCTURE_EXTENSION)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 12, originY + 7, room.name), STRUCTURE_EXTENSION)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 11, originY + 7, room.name), STRUCTURE_EXTENSION)
+
+                // links for source 1 and controller
+                let linkPositionController = BuildHelper.getPositionCloseToByPath(room.name, controller)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(linkPositionController.x, linkPositionController.y, room.name), STRUCTURE_LINK)
+
+                sources = Game.rooms[room.name].find(FIND_SOURCES);
+                let linkPositionSourceOne = BuildHelper.getPositionCloseToByPath(room.name, sources[0], 2)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(linkPositionSourceOne.x, linkPositionSourceOne.y, room.name), STRUCTURE_LINK)
+
+                // remaining bunker roads
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 6 , originY + 6 , room.name), STRUCTURE_ROAD)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 7 , originY + 7 , room.name), STRUCTURE_ROAD)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 6 , originY + 11, room.name), STRUCTURE_ROAD)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 7 , originY + 10, room.name), STRUCTURE_ROAD)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 8 , originY + 10, room.name), STRUCTURE_ROAD)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 9 , originY + 9 , room.name), STRUCTURE_ROAD)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 10, originY + 10, room.name), STRUCTURE_ROAD)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 10, originY + 8 , room.name), STRUCTURE_ROAD)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 10, originY + 7 , room.name), STRUCTURE_ROAD)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 11, originY + 6 , room.name), STRUCTURE_ROAD)
+
+                // roads surrounding bunker
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 1, originY + 1 , room.name), STRUCTURE_ROAD)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 0, originY + 2 , room.name), STRUCTURE_ROAD)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 0, originY + 3 , room.name), STRUCTURE_ROAD)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 0, originY + 4 , room.name), STRUCTURE_ROAD)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 0, originY + 5 , room.name), STRUCTURE_ROAD)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 0, originY + 6 , room.name), STRUCTURE_ROAD)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 0, originY + 6 , room.name), STRUCTURE_ROAD)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 0, originY + 7 , room.name), STRUCTURE_ROAD)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 0, originY + 8 , room.name), STRUCTURE_ROAD)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 0, originY + 9 , room.name), STRUCTURE_ROAD)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 2, originY + 0 , room.name), STRUCTURE_ROAD)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 3, originY + 0 , room.name), STRUCTURE_ROAD)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 4, originY + 0 , room.name), STRUCTURE_ROAD)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 5, originY + 0 , room.name), STRUCTURE_ROAD)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 6, originY + 0 , room.name), STRUCTURE_ROAD)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 7, originY + 0 , room.name), STRUCTURE_ROAD)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 8, originY + 0 , room.name), STRUCTURE_ROAD)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 9, originY + 0 , room.name), STRUCTURE_ROAD)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 1, originY + 10, room.name), STRUCTURE_ROAD)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 2, originY + 11, room.name), STRUCTURE_ROAD)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 3, originY + 12, room.name), STRUCTURE_ROAD)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 10, originY + 1, room.name), STRUCTURE_ROAD)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 11, originY + 2, room.name), STRUCTURE_ROAD)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 12, originY + 3, room.name), STRUCTURE_ROAD)
+
+                //TODO: Ramparts Layer 1
+
+                break;
+            case 6:
+                // 10x extensions
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 1, originY + 7 , room.name), STRUCTURE_EXTENSION)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 1, originY + 8 , room.name), STRUCTURE_EXTENSION)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 3, originY + 8 , room.name), STRUCTURE_EXTENSION)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 4, originY + 8 , room.name), STRUCTURE_EXTENSION)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 5, originY + 8 , room.name), STRUCTURE_EXTENSION)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 4, originY + 7 , room.name), STRUCTURE_EXTENSION)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 6, originY + 9 , room.name), STRUCTURE_EXTENSION)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 7, originY + 9 , room.name), STRUCTURE_EXTENSION)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 8, originY + 9 , room.name), STRUCTURE_EXTENSION)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 5, originY + 10, room.name), STRUCTURE_EXTENSION)
+
+                // link for source 2
+                sources = Game.rooms[room.name].find(FIND_SOURCES);
+                let linkPositionSourceTwo = BuildHelper.getPositionCloseToByPath(room.name, sources[1], 2)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(linkPositionSourceTwo.x, linkPositionSourceTwo.y, room.name), STRUCTURE_LINK)
+
+                // extractor an road to mineral
+                let mineral = controller.pos.findClosestByRange(FIND_MINERALS);
+                BuildHelper.buildRoad(room.name, mineral!.pos)
+                BuildQueue.addToBuildQueue(room.name, mineral!.pos, STRUCTURE_EXTRACTOR)
+
+                //terminal & 3x labs
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 4, originY + 5, room.name), STRUCTURE_TERMINAL)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 5, originY + 6, room.name), STRUCTURE_LAB)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 6, originY + 7, room.name), STRUCTURE_LAB)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 5, originY + 7, room.name), STRUCTURE_LAB)
+
+                //TODO: Ramparts Layer 2
+
+                break;
+
+            case 7:
+                // thrid tower, second spawn
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 10, originY + 6, room.name), STRUCTURE_TOWER)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 5 , originY + 4, room.name), STRUCTURE_SPAWN)
+
+                // 10x extenstions
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 1, originY + 9 , room.name), STRUCTURE_EXTENSION)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 2, originY + 9 , room.name), STRUCTURE_EXTENSION)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 2, originY + 10, room.name), STRUCTURE_EXTENSION)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 3, originY + 10, room.name), STRUCTURE_EXTENSION)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 3, originY + 11, room.name), STRUCTURE_EXTENSION)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 4, originY + 11, room.name), STRUCTURE_EXTENSION)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 4, originY + 12, room.name), STRUCTURE_EXTENSION)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 5, originY + 12, room.name), STRUCTURE_EXTENSION)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 6, originY + 12, room.name), STRUCTURE_EXTENSION)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 7, originY + 12, room.name), STRUCTURE_EXTENSION)
+
+                // bunker link, 3x labs
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 1, originY + 4, room.name), STRUCTURE_LINK)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 6, originY + 8, room.name), STRUCTURE_LAB)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 7, originY + 8, room.name), STRUCTURE_LAB)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 8, originY + 7, room.name), STRUCTURE_LAB)
+
+                // factory
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 5, originY + 3, room.name), STRUCTURE_FACTORY)
+
+                //TODO: Ramparts Layer 3
+
+                break;
+
+            case 8:
+                // 3x towers, third spawn
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 3, originY + 7 , room.name), STRUCTURE_TOWER)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 4, originY + 9 , room.name), STRUCTURE_TOWER)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 6, originY + 10, room.name), STRUCTURE_TOWER)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 1, originY + 3 , room.name), STRUCTURE_SPAWN)
+
+                // 10x extensions
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 7 , originY + 11, room.name), STRUCTURE_EXTENSION)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 8 , originY + 11, room.name), STRUCTURE_EXTENSION)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 9 , originY + 11, room.name), STRUCTURE_EXTENSION)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 10, originY + 11, room.name), STRUCTURE_EXTENSION)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 11, originY + 11, room.name), STRUCTURE_EXTENSION)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 9 , originY + 10, room.name), STRUCTURE_EXTENSION)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 11, originY + 10, room.name), STRUCTURE_EXTENSION)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 11, originY + 9 , room.name), STRUCTURE_EXTENSION)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 11, originY + 8 , room.name), STRUCTURE_EXTENSION)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 10, originY + 9 , room.name), STRUCTURE_EXTENSION)
+
+                // second controller link
+                let linkTwoPositionController = BuildHelper.getPositionCloseToByPath(room.name, controller)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(linkTwoPositionController.x, linkTwoPositionController.y, room.name), STRUCTURE_LINK)
+
+                // 4x labs
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 8, originY + 6, room.name), STRUCTURE_LAB)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 7, originY + 6, room.name), STRUCTURE_LAB)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 7, originY + 5, room.name), STRUCTURE_LAB)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 6, originY + 5, room.name), STRUCTURE_LAB)
+
+                //observer, nuker, powerspawn
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 8, originY + 8, room.name), STRUCTURE_OBSERVER)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 4, originY + 3, room.name), STRUCTURE_NUKER)
+                BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 3, originY + 5, room.name), STRUCTURE_POWER_SPAWN)
+
+                //TODO: 6th link (for remote mines?)
+
+                break;
+
             default:
                 break;
         }
@@ -200,7 +390,7 @@ export class RoomArchitect {
 export class BuildHelper {
     public static getPositionCloseToByPath(roomName: string, target: RoomObject, range: number = 1): PathStep {
         let spawn = Game.rooms[roomName].find(FIND_MY_SPAWNS);
-        let path = Game.rooms[roomName].findPath(spawn[0].pos, target.pos, {range: range, ignoreCreeps: true});
+        let path = Game.rooms[roomName].findPath(spawn[0].pos, target.pos, {range: range, ignoreCreeps: true, ignoreRoads: true});
         let resultPosition = path[path.length - 1];
         return resultPosition;
     }
@@ -251,6 +441,16 @@ export class BuildHelper {
 
     }
 
+    public static getPathWithoutBunkerPositions(path: RoomPosition[], startRoomName: string): RoomPosition[] {
+        let newPath = path;
+        for (let i = 0; i < newPath.length; i++) {
+            _.remove(newPath, function(p) {
+                return BuildHelper.isPositionInsideBunker(p, startRoomName)
+            });
+        }
+        return newPath;
+    }
+
     static bunkerPositions = [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0],
@@ -266,16 +466,6 @@ export class BuildHelper {
         [0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0],
         [0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0]
     ]
-    public static getPathWithoutBunkerPositions(path: RoomPosition[], startRoomName: string): RoomPosition[] {
-        let newPath = path;
-        for (let i = 0; i < newPath.length; i++) {
-            _.remove(newPath, function(p) {
-                return BuildHelper.isPositionInsideBunker(p, startRoomName)
-            });
-        }
-        return newPath;
-    }
-
     public static isPositionInsideBunker(position: RoomPosition, roomName: string): boolean {
         let originX = Memory.colonies[roomName].bunkerOrigin.x
         let originY = Memory.colonies[roomName].bunkerOrigin.y
