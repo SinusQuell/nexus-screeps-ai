@@ -30,7 +30,6 @@ export class MemoryUtils {
             bunkerOrigin: colonyOrigin,
             RCL: 0
         }
-        console.log("initialized")
     }
 
     // Initialize Global Memory Objects

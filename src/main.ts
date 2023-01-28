@@ -11,7 +11,8 @@ declare global {
 	// Memory extension
 	interface Memory {
 		allies: string[],
-		colonies: { [key: string]: ColonyMemory }
+		colonies: { [key: string]: ColonyMemory },
+		nexusInitialized: boolean
 	}
 	interface CreepMemory {
 		_trav: TravelData
@@ -23,7 +24,7 @@ declare global {
 	// Globals
 	namespace NodeJS {
 		interface Global {
-		  Nexus: Nexus;
+		  Nexus: Nexus
 		}
 	}
 }
@@ -32,6 +33,11 @@ declare global {
 // This utility uses source maps to get the line numbers and file names of the original, TS source code. Does not work in simulation.
 export const loop = ErrorMapper.wrapLoop(() => {
 	let cpu = Game.cpu.getUsed()
+
+	if (!Memory.nexusInitialized) {
+		console.log("No rooms found. Please run \"Nexus.initialize(roomName)\" after placing the first spawn.")
+		return;
+	}
 
 	// Loop through owned rooms
 	for (let roomName in Game.rooms) {
