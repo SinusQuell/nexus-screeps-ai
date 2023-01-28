@@ -123,7 +123,7 @@ export class RoomArchitect {
         let newRCL = controller.level
 
         switch (newRCL) {
-            case 2: // ### RCL 2 ###
+            case 2:
                 // container near first spawn
                 BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 4, originY + 1, room.name), STRUCTURE_CONTAINER)
 
@@ -156,7 +156,7 @@ export class RoomArchitect {
                 BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 9, originY + 3, room.name), STRUCTURE_ROAD)
 
                 break;
-            case 3: // ### RCL 3 ###
+            case 3:
                 // tower first
                 BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 7, originY + 3, room.name), STRUCTURE_TOWER)
 

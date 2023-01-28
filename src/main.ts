@@ -3,6 +3,7 @@ import { MemoryUtils } from "utils/MemoryUtils";
 import { Nexus } from "utils/Nexus";
 import { BuildQueue } from "building/BuildQueue";
 import { ColonyMemory } from "building/Colony";
+import { RoomArchitect } from "building/RoomArchitect";
 import { Traveler } from "creeps/Traveler";
 
 global.Nexus = Nexus;
@@ -30,10 +31,12 @@ export const loop = ErrorMapper.wrapLoop(() => {
 	for (let roomName in Game.rooms) {
 		let controller = Game.rooms[roomName].controller
 		let room = Game.rooms[roomName]
-		if (!controller || !controller.my) return // no controller or not owned
+		if (!controller || !controller.my) return // no controller or room not owned
 
-		if (Game.time % 3 == 0)
+		if (Game.time % 3 == 0) {
+			RoomArchitect.buildColonyStaged(room, controller);
 			BuildQueue.buildFromQueue(roomName);
+		}
 	}
 
 	MemoryUtils.cleanMemory()
