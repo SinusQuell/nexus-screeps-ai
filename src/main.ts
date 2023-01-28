@@ -35,7 +35,7 @@ export const loop = ErrorMapper.wrapLoop(() => {
 	let cpu = Game.cpu.getUsed()
 
 	if (!Memory.nexusInitialized) {
-		console.log("No rooms found. Please run \"Nexus.initialize(roomName)\" after placing the first spawn.")
+		console.log(`<font color="#f2ff00" type="highlight">No rooms found. Please run \"Nexus.initialize(roomName)\" after placing the first spawn. </font>`)
 		return;
 	}
 

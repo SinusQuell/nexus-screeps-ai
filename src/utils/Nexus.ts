@@ -15,6 +15,7 @@ export class Nexus {
 
         MemoryUtils.initColonyMemory(new RoomPosition(firstSpawn.pos.x - 3, firstSpawn.pos.y - 1, roomName))
 
-        console.log("Nexus initialized. Commencing Colony Protocol Alpha.")
+        //TODO: Write a logger to simplyfy colored outputs
+        return `<font color="#9dff00" type="highlight"> Nexus initialized. Commencing Colony Protocol Alpha. </font>`
     }
 }
