@@ -143,7 +143,7 @@ export class RoomArchitect {
                 let sources = Game.rooms[room.name].find(FIND_SOURCES);
                 for (let i = 0; i < sources.length; i++) {
                     let sourceContainer = BuildHelper.getPositionCloseToByPath(room.name, sources[i]);
-                    BuildQueue.addToBuildQueue(room.name, new RoomPosition(sourceContainer.x, sourceContainer.y, room.name), STRUCTURE_EXTENSION)
+                    BuildQueue.addToBuildQueue(room.name, new RoomPosition(sourceContainer.x, sourceContainer.y, room.name), STRUCTURE_CONTAINER)
                 }
 
                 // first early roads
