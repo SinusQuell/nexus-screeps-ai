@@ -139,7 +139,6 @@ export class RoomArchitect {
                 BuildQueue.addToBuildQueue(room.name, new RoomPosition(containerPosController.x, containerPosController.y, room.name), STRUCTURE_CONTAINER)
 
                 // containers near sources
-                // TODO: save these position in Colony Memory so miners can know where to stand for drop mining
                 let sources = Game.rooms[room.name].find(FIND_SOURCES);
                 for (let i = 0; i < sources.length; i++) {
                     let sourceContainer = BuildHelper.getPositionCloseToByPath(room.name, sources[i]);
