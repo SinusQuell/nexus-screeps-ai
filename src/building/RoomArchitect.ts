@@ -166,7 +166,7 @@ export class RoomArchitect {
                 BuildQueue.addToBuildQueue(room.name, new RoomPosition(originX + 7, originY + 4, room.name), STRUCTURE_EXTENSION)
 
                 // roads to sources and controller
-                sources = Game.rooms[room.name].find(FIND_SOURCES);
+                let sources = Game.rooms[room.name].find(FIND_SOURCES);
                 for (let i = 0; i < sources.length; i++) {
                     BuildHelper.buildRoad(room.name, sources[i].pos)
                 }
