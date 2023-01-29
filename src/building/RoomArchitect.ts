@@ -144,6 +144,11 @@ export class RoomArchitect {
                 for (let i = 0; i < sources.length; i++) {
                     let sourceContainer = BuildHelper.getPositionCloseToByPath(room.name, sources[i]);
                     BuildQueue.addToBuildQueue(room.name, new RoomPosition(sourceContainer.x, sourceContainer.y, room.name), STRUCTURE_CONTAINER)
+                    // save container positions as fixed mining positions into memory
+                    Memory.colonies[room.name].minerSpots[Memory.colonies[room.name].minerSpots.length] = {
+                        position: new RoomPosition(sourceContainer.x, sourceContainer.y, room.name),
+                        sourceIndex: i
+                    }
                 }
 
                 // first early roads

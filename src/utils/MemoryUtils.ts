@@ -28,7 +28,9 @@ export class MemoryUtils {
         Memory.colonies[colonyOrigin.roomName] = {
             buildQueue: [],
             bunkerOrigin: colonyOrigin,
-            RCL: 0
+            RCL: 0,
+            tasks: [],
+            minerSpots: [],
         }
     }
 

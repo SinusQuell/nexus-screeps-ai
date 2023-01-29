@@ -1,4 +1,5 @@
 import { BuildQueueMemory } from "building/BuildQueue";
+import { Task } from "creeps/tasks/Task";
 export class Colony {
 
     public static checkRclLevelUp(roomName: string): boolean {
@@ -15,5 +16,12 @@ export class Colony {
 export interface ColonyMemory {
     buildQueue: BuildQueueMemory[],
     bunkerOrigin: RoomPosition,
-    RCL: number
+    RCL: number,
+    tasks: Task[],
+    minerSpots: MinerSpot[],
+}
+
+export interface MinerSpot {
+    position: RoomPosition,
+    sourceIndex: number
 }
