@@ -9,7 +9,7 @@ export class RoomArchitect {
 
     // returns an array of Rectangles around the following room structures:
     // Sources, Controller, Mineral
-    private static getDefaultRectangles(roomName: string, rectSize: number = 2): Rectangle[] {
+    static getDefaultRectangles(roomName: string, rectSize: number = 2): Rectangle[] {
         if (!Game.rooms[roomName]) return []; //check for vision
 
         // gather structure positions
@@ -21,7 +21,7 @@ export class RoomArchitect {
         return Rectangle.createRectangles(safePos, rectSize)
     }
 
-    private static findSpaceNearPoint(
+    static findSpaceNearPoint(
         room: Room,
         rectangleWidth: number,
         rectangleHeight: number,
@@ -86,7 +86,7 @@ export class RoomArchitect {
         return optimalSpot
     }
 
-    private static findSpaceExclude(
+    static findSpaceExclude(
         room: Room,
         rectangleWidth: number,
         rectangleHeight: number,
