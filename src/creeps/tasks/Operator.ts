@@ -1,6 +1,5 @@
 import { TaskMineMemory, TaskType } from "./Task"
 
-
 export class Operator {
 
     public static updateColonyTasks(room: Room) {
@@ -23,7 +22,7 @@ export class Operator {
                 taskType: TaskType.MINE,
                 taskPosition: minerSpots[i].position,
                 requiredParts: {
-                    work: 6,
+                    work: 6, //TODO: consider maximum available energy (RCL)
                     move: 1,
                 }
             }

@@ -22,7 +22,7 @@ export interface RequiredParts {
     move?: number,
     tough?: number,
     attack?: number,
-    rangedAttack?: number,
+    ranged_attack?: number,
     heal?: number,
     claim?: number,
 }

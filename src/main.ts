@@ -6,6 +6,7 @@ import { ColonyMemory } from "building/Colony";
 import { RoomArchitect } from "building/RoomArchitect";
 import { Traveler } from "creeps/Traveler";
 import { Operator } from "creeps/tasks/Operator";
+import { createBody } from "spawning/SpawningUtils";
 
 global.Nexus = Nexus;
 declare global {
@@ -53,6 +54,12 @@ export const loop = ErrorMapper.wrapLoop(() => {
 			Operator.updateColonyTasks(room)
 		}
 	}
+
+	let test = createBody(500, {
+		work: 6,
+		move: 1
+	})
+	console.log(test)
 
 	MemoryUtils.cleanMemory()
 
