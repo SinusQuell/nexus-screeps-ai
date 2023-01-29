@@ -139,15 +139,9 @@ export class RoomArchitect {
                 BuildQueue.addToBuildQueue(room.name, new RoomPosition(containerPosController.x, containerPosController.y, room.name), STRUCTURE_CONTAINER)
 
                 // containers near sources
-                let sources = Game.rooms[room.name].find(FIND_SOURCES);
-                for (let i = 0; i < sources.length; i++) {
-                    let sourceContainer = BuildHelper.getPositionCloseToByPath(room.name, sources[i]);
-                    BuildQueue.addToBuildQueue(room.name, new RoomPosition(sourceContainer.x, sourceContainer.y, room.name), STRUCTURE_CONTAINER)
-                    // save container positions as fixed mining positions into memory
-                    Memory.colonies[room.name].minerSpots[Memory.colonies[room.name].minerSpots.length] = {
-                        position: new RoomPosition(sourceContainer.x, sourceContainer.y, room.name),
-                        sourceIndex: i
-                    }
+                let minerSpots = Memory.colonies[room.name].minerSpots // see MemoryUtils.initColonyMemory, the positions saved there during initialization
+                for (let i = 0; i < minerSpots.length; i++) {
+                    BuildQueue.addToBuildQueue(room.name, new RoomPosition(minerSpots[i].position.x, minerSpots[i].position.y, room.name), STRUCTURE_CONTAINER)
                 }
 
                 // first early roads

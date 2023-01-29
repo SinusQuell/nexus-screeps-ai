@@ -1,3 +1,5 @@
+import { BuildHelper } from "building/RoomArchitect";
+
 export class MemoryUtils {
 
     // Check if a player is an ally
@@ -23,8 +25,9 @@ export class MemoryUtils {
 
     // Initialize Colony Memory for new Colonies
     public static initColonyMemory(colonyOrigin: RoomPosition) {
-        this.initMemory()
+        if (!Memory.colonies) Memory.colonies = {};
 
+        // initialize colony obejct
         Memory.colonies[colonyOrigin.roomName] = {
             buildQueue: [],
             bunkerOrigin: colonyOrigin,
@@ -32,10 +35,15 @@ export class MemoryUtils {
             tasks: [],
             minerSpots: [],
         }
-    }
 
-    // Initialize Global Memory Objects
-    public static initMemory() {
-        if (!Memory.colonies) Memory.colonies = {};
+        // save mining positions
+        let sources = Game.rooms[colonyOrigin.roomName].find(FIND_SOURCES);
+        for (let i = 0; i < sources.length; i++) {
+            let miningPos = BuildHelper.getPositionCloseToByPath(colonyOrigin.roomName, sources[i]);
+            Memory.colonies[colonyOrigin.roomName].minerSpots[Memory.colonies[colonyOrigin.roomName].minerSpots.length] = {
+                position: new RoomPosition(miningPos.x, miningPos.y, colonyOrigin.roomName),
+                sourceIndex: i
+            }
+        }
     }
 }
