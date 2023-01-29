@@ -1,14 +1,30 @@
 export interface TaskMemory {
     taskType: TaskType,
     taskPosition?: RoomPosition
+    requiredParts?: RequiredParts
+}
+
+export interface TaskMineMemory extends TaskMemory {
+    sourceIndex: number
 }
 
 export enum TaskType {
-    mine = 'm',
-    upgrade = 'u',
-    build = 'b',
-    transport = 't',
-    fill = 'f'
+    MINE = 'm',
+    UPGRADE = 'u',
+    BUILD = 'b',
+    TRANSPORT = 't',
+    FILL = 'f'
+}
+
+export interface RequiredParts {
+    work?: number,
+    carry?: number,
+    move?: number,
+    tough?: number,
+    attack?: number,
+    rangedAttack?: number,
+    heal?: number,
+    claim?: number,
 }
 
 export abstract class Task {

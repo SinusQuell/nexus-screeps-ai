@@ -5,6 +5,7 @@ import { BuildQueue } from "building/BuildQueue";
 import { ColonyMemory } from "building/Colony";
 import { RoomArchitect } from "building/RoomArchitect";
 import { Traveler } from "creeps/Traveler";
+import { Operator } from "creeps/tasks/Operator";
 
 global.Nexus = Nexus;
 declare global {
@@ -48,6 +49,8 @@ export const loop = ErrorMapper.wrapLoop(() => {
 		if (Game.time % 3 == 0) {
 			RoomArchitect.buildColonyStaged(room, controller);
 			BuildQueue.buildFromQueue(roomName);
+		} else {
+			Operator.updateColonyTasks(room)
 		}
 	}
 
