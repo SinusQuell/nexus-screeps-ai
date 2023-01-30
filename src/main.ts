@@ -7,6 +7,7 @@ import { RoomArchitect } from "building/RoomArchitect";
 import { Traveler } from "creeps/Traveler";
 import { Operator } from "creeps/tasks/Operator";
 import { createBody } from "spawning/SpawningUtils";
+import { Task, TaskMemory } from "creeps/tasks/Task";
 
 global.Nexus = Nexus;
 declare global {
@@ -17,7 +18,8 @@ declare global {
 		nexusInitialized: boolean
 	}
 	interface CreepMemory {
-		_trav: TravelData
+		_trav: TravelData,
+		task: TaskMemory,
 	}
 	interface RoomMemory {
 		avoid?: number
