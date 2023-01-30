@@ -1,4 +1,5 @@
 import { TaskMineMemory, TaskType } from "./Task"
+import {v4 as uuid} from 'uuid';
 
 export class Operator {
 
@@ -19,13 +20,15 @@ export class Operator {
 
             //didn't find a task for this spot! create one
             Memory.colonies[room.name].tasks[Memory.colonies[room.name].tasks.length] = {
+                id: uuid(),
                 taskType: TaskType.MINE,
                 taskPosition: minerSpots[i].position,
+                sourceIndex: minerSpots[i].sourceIndex,
                 requiredParts: {
-                    work: 6, //TODO: consider maximum available energy (RCL)
+                    work: 6,
                     move: 1,
                 }
-            }
+            } as TaskMineMemory
         }
     }
 }
