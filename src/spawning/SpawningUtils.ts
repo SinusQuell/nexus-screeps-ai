@@ -47,3 +47,16 @@ export function createBody(maxEnergy: number, requiredParts: RequiredParts): Bod
 
 	return body;
 }
+
+export function getCostByParts(requiredParts: RequiredParts): number {
+	if (!Object.keys(requiredParts).length) return 0;
+
+	let cost = 0
+	for (const part of Object.keys(requiredParts)) {
+		if (requiredParts[part as BodyPartConstant]! > 0) {
+			cost += BODYPART_COST[part as BodyPartConstant] * requiredParts[part as BodyPartConstant]!
+		}
+	}
+
+	return cost;
+}
