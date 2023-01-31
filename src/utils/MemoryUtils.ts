@@ -1,4 +1,4 @@
-import { BuildHelper } from "building/RoomArchitect";
+import { BuildHelper } from "building/BuildHelper";
 
 export class MemoryUtils {
 
