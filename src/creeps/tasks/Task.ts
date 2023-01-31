@@ -9,14 +9,6 @@ export interface TaskMineMemory extends TaskMemory {
     sourceIndex: number
 }
 
-export enum TaskType {
-    MINE = 'm',
-    UPGRADE = 'u',
-    BUILD = 'b',
-    TRANSPORT = 't',
-    FILL = 'f'
-}
-
 export interface RequiredParts {
     work?: number,
     carry?: number,
@@ -30,4 +22,12 @@ export interface RequiredParts {
 
 export abstract class Task {
     abstract run(creep: Creep): ScreepsReturnCode
+}
+
+export enum TaskType {
+    MINE = 'm',
+    UPGRADE = 'u',
+    BUILD = 'b',
+    TRANSPORT = 't',
+    FILL = 'f'
 }
