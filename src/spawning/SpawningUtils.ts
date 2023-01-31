@@ -60,3 +60,14 @@ export function getCostByParts(requiredParts: RequiredParts): number {
 
 	return cost;
 }
+
+export function getCostByPartsArray(requiredParts: BodyPartConstant[]): number {
+	if (!requiredParts.length) return 0;
+
+	let cost = 0
+	requiredParts.forEach(p => {
+		cost += BODYPART_COST[p]
+	});
+
+	return cost;
+}
