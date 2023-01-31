@@ -3,11 +3,11 @@ import { MemoryUtils } from "utils/MemoryUtils";
 import { Nexus } from "utils/Nexus";
 import { BuildQueue } from "building/BuildQueue";
 import { ColonyMemory } from "building/Colony";
-import { RoomArchitect } from "building/RoomArchitect";
+import { Architect } from "building/Architect";
 import { Traveler } from "creeps/Traveler";
-import { Operator } from "creeps/tasks/Operator";
-import { createBody } from "spawning/SpawningUtils";
-import { Task, TaskMemory } from "creeps/tasks/Task";
+import { Operator } from "creeps/Operator";
+import { TaskMemory } from "creeps/tasks/Task";
+import { Progenitor } from "spawning/Progenitor";
 
 global.Nexus = Nexus;
 declare global {
@@ -18,8 +18,9 @@ declare global {
 		nexusInitialized: boolean
 	}
 	interface CreepMemory {
-		_trav: TravelData,
-		task: TaskMemory,
+		_trav?: TravelData,
+		task?: TaskMemory,
+		homeRoomName: string,
 	}
 	interface RoomMemory {
 		avoid?: number
@@ -43,6 +44,8 @@ export const loop = ErrorMapper.wrapLoop(() => {
 		return;
 	}
 
+	// TOOD: Load & group/filter creeps only once and give them to Operator & Progenitor
+
 	// Loop through owned rooms
 	for (let roomName in Game.rooms) {
 		let controller = Game.rooms[roomName].controller
@@ -50,18 +53,13 @@ export const loop = ErrorMapper.wrapLoop(() => {
 		if (!controller || !controller.my) return // no controller or room not owned
 
 		if (Game.time % 3 == 0) {
-			RoomArchitect.buildColonyStaged(room, controller);
-			BuildQueue.buildFromQueue(roomName);
+			Architect.buildColonyStaged(room, controller)
+			BuildQueue.buildFromQueue(roomName)
 		} else {
 			Operator.updateColonyTasks(room)
+			Progenitor.spawnCreeps(room)
 		}
 	}
-
-	let test = createBody(500, {
-		work: 6,
-		move: 1
-	})
-	console.log(test)
 
 	MemoryUtils.cleanMemory()
 
