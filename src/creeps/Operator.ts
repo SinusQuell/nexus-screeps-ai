@@ -1,7 +1,22 @@
-import { TaskMineMemory, TaskType } from "./Task"
-import {v4 as uuid} from 'uuid';
+import { TaskMineMemory, TaskType } from "./tasks/Task"
+import { v4 as uuid } from 'uuid';
+import { createTask } from "./tasks/TaskMapper";
 
 export class Operator {
+
+    public static operateCreeps() {
+        for(let name in Game.creeps) {
+            let creep = Game.creeps[name];
+            try {
+                if (creep.memory.task) {
+                    let task = createTask(creep.memory.task?.taskType)
+                    task.run(creep);
+                }
+            } catch (error: any) {
+                console.error(error.stack);
+            }
+        }
+    }
 
     public static updateColonyTasks(room: Room) {
         this.updateMiningTasks(room)
