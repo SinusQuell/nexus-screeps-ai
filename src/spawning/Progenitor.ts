@@ -41,7 +41,7 @@ export class Progenitor {
             // spawn missing creeps
             for (let i = 0; i < creepAmount-creeps.length; i++) {
                 // adjust task so first creep always goes to the taskPosition, others just path there
-                if (creepAmount > 1 && i == 0) t.useTaskPosition = true
+                if (creepAmount > 1 && i == 0 && (!creeps.length ||creeps.length == 0)) t.useTaskPosition = true
                 else t.useTaskPosition = false
 
                 let spawn = this.findFreeSpawn(room)
