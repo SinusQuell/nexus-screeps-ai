@@ -53,7 +53,7 @@ export class Traveler {
 
         // initialize data object
         if (!creep.memory._trav) {
-            creep.memory._trav = {} as TravelData;
+            creep.memory._trav = {}
         }
         let travelData = creep.memory._trav as TravelData;
 
@@ -333,7 +333,7 @@ export class Traveler {
                 // handle case where pathfinder failed at a short distance due to not using findRoute
                 // can happen for situations where the creep would have to take an uncommonly indirect path
                 // options.allowedRooms and options.routeCallback can also be used to handle this situation
-                if (roomDistance <= 2) {
+                if (roomDistance <= 2 || originRoomName == destRoomName) {
                     console.log(`TRAVELER: path failed without findroute, trying with options.useFindRoute = true`);
                     console.log(`from: ${origin}, destination: ${destination}`);
                     options.useFindRoute = true;
@@ -602,8 +602,7 @@ export class Traveler {
             state.lastCoord = {x: travelData.state[STATE_PREV_X], y: travelData.state[STATE_PREV_Y] };
             state.cpu = travelData.state[STATE_CPU];
             state.stuckCount = travelData.state[STATE_STUCK];
-            state.destination = new RoomPosition(travelData.state[STATE_DEST_X], travelData.state[STATE_DEST_Y],
-                travelData.state[STATE_DEST_ROOMNAME]);
+            state.destination = new RoomPosition(travelData.state[STATE_DEST_X], travelData.state[STATE_DEST_Y], travelData.state[STATE_DEST_ROOMNAME]);
         } else {
             state.cpu = 0;
             state.destination = destination;
