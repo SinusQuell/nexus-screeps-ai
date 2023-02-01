@@ -21,6 +21,7 @@ export class Progenitor {
             // if creepCost is smaller than room.energyCapacityAvailable (so we can spawn the whole creep),
             // then creepAmount will be 1. Otherwise, it will be larger.
             let creepAmount = Math.ceil(creepCostFull / room.energyCapacityAvailable)
+            console.log(creepAmount)
 
             // look for creeps already doing this task
             let creeps = _.filter(Game.creeps, c => c.memory.task?.id == t.id && c.memory.homeRoomName == room.name)
@@ -41,6 +42,7 @@ export class Progenitor {
             for (let i = 0; i < creepAmount-creeps.length; i++) {
                 // adjust task so first creep always goes to the taskPosition, others just path there
                 if (creepAmount > 1 && i == 0) t.useTaskPosition = true
+                else t.useTaskPosition = false
 
                 let spawn = this.findFreeSpawn(room)
                 if (spawn && room.energyAvailable >= creepCostFinal) {
