@@ -44,6 +44,9 @@ export const loop = ErrorMapper.wrapLoop(() => {
 		return;
 	}
 
+	// assign and run creep behaviors
+	Operator.operateCreeps()
+
 	// TOOD: Load & group/filter creeps only once and give them to Operator & Progenitor
 
 	// Loop through owned rooms

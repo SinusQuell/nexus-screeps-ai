@@ -13,7 +13,7 @@ export class Operator {
                     task.run(creep);
                 }
             } catch (error: any) {
-                console.error(error.stack);
+                console.log(error.stack);
             }
         }
     }
@@ -37,7 +37,7 @@ export class Operator {
             Memory.colonies[room.name].tasks[Memory.colonies[room.name].tasks.length] = {
                 id: uuid(),
                 taskType: TaskType.MINE,
-                taskPosition: minerSpots[i].position,
+                pos: minerSpots[i].position,
                 sourceIndex: minerSpots[i].sourceIndex,
                 requiredParts: {
                     work: 6,

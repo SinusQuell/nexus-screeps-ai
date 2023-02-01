@@ -1,12 +1,13 @@
 export interface TaskMemory {
     id: string,
     taskType: TaskType,
-    taskPosition?: RoomPosition,
+    pos: RoomPosition,
     requiredParts: RequiredParts
 }
 
 export interface TaskMineMemory extends TaskMemory {
-    sourceIndex: number
+    sourceIndex?: number,
+    useTaskPosition?: boolean
 }
 
 export interface RequiredParts {
