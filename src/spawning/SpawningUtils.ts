@@ -1,4 +1,5 @@
 import { RequiredParts } from "creeps/tasks/Task";
+import { clone } from "lodash";
 
 // Expample 1: bodyBuilder().work(2).carry(1).move(1).finalise();
 // returns: [WORK, WORK, CARRY, MOVE]
@@ -31,6 +32,7 @@ export const bodyBuilder = () => bodyImpl([], 0);
 export function createBody(maxEnergy: number, requiredParts: RequiredParts): BodyPartConstant[] {
 	let body: BodyPartConstant[] = [];
 	let canAddParts = true;
+	requiredParts = clone(requiredParts) // don't mutate directly in memory!
 
 	while (maxEnergy > 0 && canAddParts) {
 		canAddParts = false;
