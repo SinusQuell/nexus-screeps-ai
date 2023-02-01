@@ -2,9 +2,6 @@ import { MemoryUtils } from "utils/MemoryUtils";
 
 export class Nexus {
 
-    // GLobal Settings
-    public static NX_CONSTRUCTIONS_PER_BASE = 5
-
     // This should be called from the Console right after placing the very first spawn in the world.
     // It initializes the Bot and should never be run again.
     public static initialize(roomName: string) {

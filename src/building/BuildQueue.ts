@@ -1,4 +1,4 @@
-import { Nexus } from "utils/Nexus";
+import { Settings } from "utils/Settings";
 
 export class BuildQueue {
 
@@ -20,7 +20,7 @@ export class BuildQueue {
 
         // only ever place a certain amount of construction sites per colony
         let cSiteCount = buildRoom.find(FIND_MY_CONSTRUCTION_SITES).length
-        if (cSiteCount >= Nexus.NX_CONSTRUCTIONS_PER_BASE) return
+        if (cSiteCount >= Settings.NX_CONSTRUCTIONS_PER_BASE) return
 
         // check for creep at the position, as they block construction via code
         let creeps = buildRoom.lookForAt(LOOK_CREEPS, toBuild.buildPosition.x, toBuild.buildPosition.y)
