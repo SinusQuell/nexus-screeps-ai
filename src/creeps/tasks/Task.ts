@@ -10,6 +10,11 @@ export interface TaskMineMemory extends TaskMemory {
     useTaskPosition?: boolean
 }
 
+export interface TaskTransportMemory extends TaskMemory {
+    toPosition?: RoomPosition,
+    sourceIndex?: number
+}
+
 export interface RequiredParts {
     work?: number,
     carry?: number,
