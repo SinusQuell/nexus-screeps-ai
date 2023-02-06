@@ -30,6 +30,14 @@ export class SourceHelper  {
         return furthestSource;
     }
 
+    public static findSourceClosestTo(position: RoomPosition, byPath = true): Source | null {
+        let room = Game.rooms[position.roomName];
+        if (!room) return null
+
+        if (byPath) return position.findClosestByPath(FIND_SOURCES)
+        else return position.findClosestByRange(FIND_SOURCES)
+    }
+
     public static getSourceSpaceAmount(source: Source): number {
         if (!Game.rooms[source.room.name]) return 0// check for vision
 
