@@ -45,6 +45,7 @@ export function createBody(maxEnergy: number, requiredParts: RequiredParts): Bod
 				canAddParts = true;
 			}
 		}
+		if(body.length >= MAX_CREEP_SIZE) canAddParts = false
 	}
 
 	return body;
