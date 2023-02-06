@@ -31,7 +31,7 @@ export class SourceHelper  {
     }
 
     public static findSourceClosestTo(position: RoomPosition, byPath = true): Source | null {
-        let room = Game.rooms[position.roomName];
+        const room = Game.rooms[position.roomName];
         if (!room) return null
 
         if (byPath) return position.findClosestByPath(FIND_SOURCES)
@@ -41,8 +41,8 @@ export class SourceHelper  {
     public static getSourceSpaceAmount(source: Source): number {
         if (!Game.rooms[source.room.name]) return 0// check for vision
 
-        let fields = Game.rooms[source.room.name].lookForAtArea(LOOK_TERRAIN, source.pos.y-1, source.pos.x-1, source.pos.y+1, source.pos.x+1, true);
-        let accessibleFields = 9-_.countBy( fields , "terrain" ).wall;
+        const fields = Game.rooms[source.room.name].lookForAtArea(LOOK_TERRAIN, source.pos.y-1, source.pos.x-1, source.pos.y+1, source.pos.x+1, true);
+        const accessibleFields = 9-_.countBy( fields , "terrain" ).wall;
         return accessibleFields;
     }
 
