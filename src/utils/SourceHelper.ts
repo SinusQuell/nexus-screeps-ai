@@ -41,8 +41,8 @@ export class SourceHelper  {
     public static getSourceSpaceAmount(source: Source): number {
         if (!Game.rooms[source.room.name]) return 0// check for vision
 
-        var fields = Game.rooms[source.room.name].lookForAtArea(LOOK_TERRAIN, source.pos.y-1, source.pos.x-1, source.pos.y+1, source.pos.x+1, true);
-        var accessibleFields = 9-_.countBy( fields , "terrain" ).wall;
+        let fields = Game.rooms[source.room.name].lookForAtArea(LOOK_TERRAIN, source.pos.y-1, source.pos.x-1, source.pos.y+1, source.pos.x+1, true);
+        let accessibleFields = 9-_.countBy( fields , "terrain" ).wall;
         return accessibleFields;
     }
 
