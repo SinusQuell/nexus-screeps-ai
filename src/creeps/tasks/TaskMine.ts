@@ -10,9 +10,9 @@ export class TaskMine extends Task {
         // move to source
         if(creep.harvest(source) == ERR_NOT_IN_RANGE) {
             // use saved mining position or just path to source?
-            if (task.useTaskPosition && task.pos)
-                creep.travelTo(task, {ensurePath: true})
+            if (task.useTaskPosition && task.pos) creep.travelTo(new RoomPosition(task.pos.x, task.pos.y, task.pos.roomName))
             else creep.travelTo(source.pos)
+
             return OK
         }
         return OK

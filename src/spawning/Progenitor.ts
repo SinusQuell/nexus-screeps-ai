@@ -21,7 +21,6 @@ export class Progenitor {
             // if creepCost is smaller than room.energyCapacityAvailable (so we can spawn the whole creep),
             // then creepAmount will be 1. Otherwise, it will be larger.
             let creepAmount = Math.ceil(creepCostFull / room.energyCapacityAvailable)
-            console.log(creepAmount)
 
             // look for creeps already doing this task
             let creeps = _.filter(Game.creeps, c => c.memory.task?.id == t.id && c.memory.homeRoomName == room.name)
@@ -30,6 +29,9 @@ export class Progenitor {
             // create fitting body
             let body = createBody(room.energyCapacityAvailable, t.requiredParts)
             let creepCostFinal = getCostByPartsArray(body)
+
+            // break already if there's not enough energy for the creep.
+            if (room.energyAvailable < creepCostFinal) return
 
             //get source info
             let source = room.find(FIND_SOURCES)[t.sourceIndex!]
@@ -41,12 +43,13 @@ export class Progenitor {
             // spawn missing creeps
             for (let i = 0; i < creepAmount-creeps.length; i++) {
                 // adjust task so first creep always goes to the taskPosition, others just path there
-                if (creepAmount > 1 && i == 0 && (!creeps.length ||creeps.length == 0)) t.useTaskPosition = true
+                if (creepAmount > 1 && i == 0 && (!creeps.length || creeps.length == 0)) t.useTaskPosition = true
                 else t.useTaskPosition = false
 
                 let spawn = this.findFreeSpawn(room)
-                if (spawn && room.energyAvailable >= creepCostFinal) {
+                if (spawn) {
                     spawn.spawnCreep(body, `${t.taskType}${new Date().getTime()}`, { memory: { homeRoomName: room.name, task: t,}})
+                    return //only spawn one creep per colony per tick
                 }
             }
         });
