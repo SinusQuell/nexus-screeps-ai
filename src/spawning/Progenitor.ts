@@ -1,5 +1,4 @@
 import { TaskMemory, TaskMineMemory, TaskTransportMemory, TaskType } from "../creeps/tasks/Task"
-import { TaskMine } from "../creeps/tasks/TaskMine"
 import { createBody, getCostByParts, getCostByPartsArray } from "./SpawningUtils"
 import { SourceHelper } from "../utils/SourceHelper";
 import { clone } from "lodash";
