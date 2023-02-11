@@ -1,4 +1,4 @@
-import { TaskMineMemory, TaskTransportMemory, TaskType } from "./tasks/Task"
+import { TaskFillMemory, TaskMineMemory, TaskTransportMemory, TaskType } from "./tasks/Task"
 import { v4 as uuid } from 'uuid';
 import { createTask } from "./tasks/TaskMapper";
 import { SourceHelper } from "utils/SourceHelper";
@@ -90,6 +90,26 @@ export class Operator {
         }
 
         // TODO: create transport tasks for remote mines
-
     }
+
+    static updateFillTasks(room: Room) {
+        // look for existing tasks
+        let fillTasks = Memory.colonies[room.name].tasks.filter(x => x.taskType == TaskType.FILL) as TaskFillMemory[]
+
+        // always one filler per room
+        if (!fillTasks) {
+            // no transport task for this source! create one
+            Memory.colonies[room.name].tasks[Memory.colonies[room.name].tasks.length] = {
+                id: uuid(),
+                taskType: TaskType.FILL,
+                pos: new RoomPosition(25, 25, room.name), // filler doesn't need a position, but it can't be empty
+                requiredParts: {
+                    carry: 16,
+                    move: 8,
+                }
+            } as TaskFillMemory
+        }
+    }
+
+
 }

@@ -15,6 +15,10 @@ export interface TaskTransportMemory extends TaskMemory {
     sourceIndex?: number
 }
 
+export interface TaskFillMemory extends TaskMemory {
+
+}
+
 export interface RequiredParts {
     work?: number,
     carry?: number,

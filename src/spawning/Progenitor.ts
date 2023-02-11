@@ -1,4 +1,4 @@
-import { TaskMemory, TaskMineMemory, TaskTransportMemory, TaskType } from "../creeps/tasks/Task"
+import { TaskFillMemory, TaskMemory, TaskMineMemory, TaskTransportMemory, TaskType } from "../creeps/tasks/Task"
 import { createBody, getCostByParts, getCostByPartsArray } from "./SpawningUtils"
 import { SourceHelper } from "../utils/SourceHelper";
 import { clone } from "lodash";
@@ -56,13 +56,23 @@ export class Progenitor {
             if (!creepData) return
 
             // spawn missing creeps
-            for (let i = 0; i < creepData.creepAmount-creepData.creeps.length; i++) {
-                let spawn = this.findFreeSpawn(room)
-                if (spawn) {
-                    spawn.spawnCreep(creepData.body, `${t.taskType}${new Date().getTime()}`, { memory: { homeRoomName: room.name, task: t,}})
-                    return //only spawn one creep per colony per tick
-                }
-            }
+            this.spawnCreepsDefault(room, creepData, t)
+        })
+    }
+
+    public static checkFillTasks(room: Room) {
+        let fillTasks = Memory.colonies[room.name].tasks.filter(t => t.taskType == TaskType.FILL) as TaskFillMemory[]
+        if (!fillTasks.length) return;
+
+        fillTasks.forEach(t => {
+            t = clone(t)
+
+            // get creep data
+            let creepData = this.getCreepData(room, t)
+            if (!creepData) return
+
+            // spawn missing creeps
+            this.spawnCreepsDefault(room, creepData, t)
         })
     }
 
@@ -92,6 +102,17 @@ export class Progenitor {
             creeps: creeps,
             body: body
         } as CreepData
+    }
+
+    static spawnCreepsDefault(room: Room, creepData: CreepData, task: TaskMemory) {
+        // spawn missing creeps
+        for (let i = 0; i < creepData.creepAmount-creepData.creeps.length; i++) {
+            let spawn = this.findFreeSpawn(room)
+            if (spawn) {
+                spawn.spawnCreep(creepData.body, `${task.taskType}${new Date().getTime()}`, { memory: { homeRoomName: room.name, task: task,}})
+                return //only spawn one creep per colony per tick
+            }
+        }
     }
 
 
