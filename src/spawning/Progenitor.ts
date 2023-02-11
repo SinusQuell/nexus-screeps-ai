@@ -6,9 +6,9 @@ import { clone } from "lodash";
 export class Progenitor {
 
     static checkTaskFunctions = [
-        this.checkFillTasks,
-        this.checkMineTasks,
-        this.checkTransportTasks
+        Progenitor.checkFillTasks,
+        Progenitor.checkFillTasks,
+        Progenitor.checkFillTasks
     ]
 
     public static spawnCreeps(room: Room) {
