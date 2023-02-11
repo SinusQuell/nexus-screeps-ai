@@ -28,7 +28,7 @@ export class Progenitor {
             t = clone(t)
 
             // get creep data (body, cost, existing creeps, etc.)
-            let creepData = this.getCreepData(room, t)
+            let creepData = Progenitor.getCreepData(room, t)
             if (!creepData) return false
 
             //get source info
@@ -44,7 +44,7 @@ export class Progenitor {
                 if (creepData.creepAmount > 1 && i == 0 && (!creepData.creeps.length || creepData.creeps.length == 0)) t.useTaskPosition = true
                 else t.useTaskPosition = false
 
-                let spawn = this.findFreeSpawn(room)
+                let spawn = Progenitor.findFreeSpawn(room)
                 if (spawn) {
                     spawn.spawnCreep(creepData.body, `${t.taskType}${new Date().getTime()}`, { memory: { homeRoomName: room.name, task: t,}})
                     return true//only spawn one creep per colony per tick
@@ -65,11 +65,11 @@ export class Progenitor {
             t = clone(t)
 
             // get creep data
-            let creepData = this.getCreepData(room, t)
+            let creepData = Progenitor.getCreepData(room, t)
             if (!creepData) return false
 
             // spawn missing creeps
-            return this.spawnCreepsDefault(room, creepData, t)
+            return Progenitor.spawnCreepsDefault(room, creepData, t)
         })
 
         return false
@@ -83,11 +83,11 @@ export class Progenitor {
             t = clone(t)
 
             // get creep data
-            let creepData = this.getCreepData(room, t)
+            let creepData = Progenitor.getCreepData(room, t)
             if (!creepData) return false
 
             // spawn missing creeps
-            return this.spawnCreepsDefault(room, creepData, t)
+            return Progenitor.spawnCreepsDefault(room, creepData, t)
         })
 
         return false
