@@ -21,7 +21,9 @@ export class Operator {
 
     // TODO: cleanup tasks at some point based on current information. maybe delete task when creep dies or task is done?
     public static updateColonyTasks(room: Room) {
+        this.updateFillTasks(room)
         this.updateMiningTasks(room)
+        this.updateTransportTasks(room)
     }
 
     static updateMiningTasks(room: Room) {

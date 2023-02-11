@@ -6,9 +6,9 @@ import { clone } from "lodash";
 export class Progenitor {
 
     public static spawnCreeps(room: Room) {
-        // TODO: spawn a filler first.
+        this.checkFillTasks(room)
         this.checkMineTasks(room)
-        // TODO: spawn Transporters
+        this.checkTransportTasks(room)
     }
 
     public static checkMineTasks(room: Room) {
