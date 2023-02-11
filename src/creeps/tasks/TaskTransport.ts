@@ -1,4 +1,3 @@
-import { capitalize } from "lodash"
 import { Task, TaskTransportMemory } from "./Task"
 
 export class TaskTransport extends Task {
