@@ -63,7 +63,7 @@ export class TaskTransport extends Task {
                     return OK
                 }
             } else {
-                // TODO: nothing to pickup. idle somewhere?
+                // nothing to pickup. TODO: idle
             }
         } else { // transport it to point B
             //check for structure with a store at the target
@@ -113,17 +113,17 @@ export class TaskTransport extends Task {
 
     isAnyStoreStructure(structure: Structure): structure is AnyStoreStructure {
         return (
-          structure instanceof StructureExtension ||
-          structure instanceof StructureFactory ||
-          structure instanceof StructureLab ||
-          structure instanceof StructureLink ||
-          structure instanceof StructureNuker ||
-          structure instanceof StructurePowerSpawn ||
-          structure instanceof StructureSpawn ||
-          structure instanceof StructureStorage ||
-          structure instanceof StructureTerminal ||
-          structure instanceof StructureTower ||
-          structure instanceof StructureContainer
+            structure instanceof StructureExtension ||
+            structure instanceof StructureFactory ||
+            structure instanceof StructureLab ||
+            structure instanceof StructureLink ||
+            structure instanceof StructureNuker ||
+            structure instanceof StructurePowerSpawn ||
+            structure instanceof StructureSpawn ||
+            structure instanceof StructureStorage ||
+            structure instanceof StructureTerminal ||
+            structure instanceof StructureTower ||
+            structure instanceof StructureContainer
         );
       }
 
