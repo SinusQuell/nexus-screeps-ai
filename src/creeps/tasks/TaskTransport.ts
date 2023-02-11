@@ -39,11 +39,13 @@ export class TaskTransport extends Task {
                 const dropEnergy = Game.rooms[task.pos.roomName]
                     .lookForAtArea(LOOK_ENERGY, fromPos.y-1, fromPos.x-1, fromPos.y+1, fromPos.x+1, true)
                     .filter(s => s.energy.resourceType == RESOURCE_ENERGY);
-
-                highestDropEnergy = dropEnergy[0].energy;
-                for (let i = 0; i < dropEnergy.length; i++) {
-                    if (highestDropEnergy.amount < dropEnergy[i].energy.amount) {
-                        highestDropEnergy = dropEnergy[i].energy;
+                Resource
+                if (dropEnergy && dropEnergy.length) {
+                    highestDropEnergy = dropEnergy[0].energy;
+                    for (let i = 0; i < dropEnergy.length; i++) {
+                        if (highestDropEnergy.amount < dropEnergy[i].energy.amount) {
+                            highestDropEnergy = dropEnergy[i].energy;
+                        }
                     }
                 }
             }
