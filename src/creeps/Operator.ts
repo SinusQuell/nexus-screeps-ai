@@ -98,7 +98,7 @@ export class Operator {
         let fillTasks = Memory.colonies[room.name].tasks.filter(x => x.taskType == TaskType.FILL) as TaskFillMemory[]
 
         // always one filler per room
-        if (!fillTasks) {
+        if (!fillTasks || fillTasks.length <= 0) {
             // no transport task for this source! create one
             Memory.colonies[room.name].tasks[Memory.colonies[room.name].tasks.length] = {
                 id: uuid(),
