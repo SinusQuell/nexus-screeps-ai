@@ -1,7 +1,6 @@
 import { TaskFillMemory, TaskMineMemory, TaskTransportMemory, TaskType } from "./tasks/Task"
 import { v4 as uuid } from 'uuid';
 import { createTask } from "./tasks/TaskMapper";
-import { SourceHelper } from "utils/SourceHelper";
 
 export class Operator {
 
